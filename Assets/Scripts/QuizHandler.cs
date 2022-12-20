@@ -10,11 +10,11 @@ public class QuizHandler : MonoBehaviour
 
     bool GAMESTATE = true;
 
-    // [Header("Questions")] 
+    [Header("ENTER QUESTION OBJECTS HERE : ")] 
+    [SerializeField] List<QuestionMaker> questions = new List<QuestionMaker>();
     [SerializeField] GameObject questionField;
     [SerializeField] GameObject[] mcqButtons = new GameObject[4];
-    [SerializeField] List<QuestionMaker> questions = new List<QuestionMaker>();
-
+ 
     TextMeshProUGUI questionText;
     TextMeshProUGUI[] mcqText = new TextMeshProUGUI[4];
 
@@ -31,6 +31,8 @@ public class QuizHandler : MonoBehaviour
     [SerializeField] AudioClip[] sounds = new AudioClip[4];
 
     [SerializeField] Sprite[] buttonColors = new Sprite[4];
+    [SerializeField] GameObject timerAnimation;
+    Image timerImageFillAmount;
 
     void Start()
     {
@@ -38,6 +40,8 @@ public class QuizHandler : MonoBehaviour
         showQuestionTimer = defaultQuestionTimer;
         showAnswerTimer = defaultAnswerTimer;   
         GetComponent<AudioSource>().PlayOneShot(sounds[0]);
+        
+        timerImageFillAmount = timerAnimation.GetComponent<Image>();
 
         displayQuestionAtIndex(questionNumberIndex);
        
@@ -66,6 +70,9 @@ public class QuizHandler : MonoBehaviour
         if(GAMESTATE){
             if(questionState){
                 showQuestionTimer -= Time.deltaTime;
+
+                timerImageFillAmount.fillAmount = (showQuestionTimer/defaultQuestionTimer);
+
                 Debug.Log("Question Timer : " + showQuestionTimer);
                 if(showQuestionTimer <= 0){
                     //TODO: Show answer
@@ -106,9 +113,12 @@ public class QuizHandler : MonoBehaviour
                         GAMESTATE = false;
                         Debug.Log(questionNumberIndex + ", " + questions.Count);
                         Debug.Log(GAMESTATE);
-                        SceneManager.LoadScene(0);
+                        
                         enableOrDisableButtons(false);
                         GetComponent<AudioSource>().Stop();
+
+                        //Add new scene (Such as score screen)
+                        //SceneManager.LoadScene(0);
                     }
                     else{
                         displayQuestionAtIndex(++questionNumberIndex);
