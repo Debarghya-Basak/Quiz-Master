@@ -39,7 +39,7 @@ public class QuizHandler : MonoBehaviour
         showAnswerTimer = defaultAnswerTimer;   
         GetComponent<AudioSource>().PlayOneShot(sounds[0]);
 
-        displayQuestionAtIndex(0);
+        displayQuestionAtIndex(questionNumberIndex);
        
     }
 
@@ -49,6 +49,7 @@ public class QuizHandler : MonoBehaviour
     }
 
     private void displayQuestionAtIndex(int index){
+        Debug.Log("Index : " + index);
 
         questionText = questionField.GetComponent<TextMeshProUGUI>();
         questionText.text = questions[index].getQuestion();
@@ -64,7 +65,7 @@ public class QuizHandler : MonoBehaviour
 
         if(GAMESTATE){
             if(questionState){
-            showQuestionTimer -= Time.deltaTime;
+                showQuestionTimer -= Time.deltaTime;
                 Debug.Log("Question Timer : " + showQuestionTimer);
                 if(showQuestionTimer <= 0){
                     //TODO: Show answer
@@ -85,6 +86,9 @@ public class QuizHandler : MonoBehaviour
                         GetComponent<AudioSource>().PlayOneShot(sounds[3]);
                     }
 
+                    answerClicked = true;
+                    enableOrDisableButtons(!answerClicked);
+
                     showQuestionTimer = defaultQuestionTimer;
                     questionState = false;
                 }    
@@ -98,14 +102,18 @@ public class QuizHandler : MonoBehaviour
                     answerClicked = false;
                     enableOrDisableButtons(!answerClicked);
 
-                    if(questionNumberIndex >= questions.Count){
+                    if(questionNumberIndex == questions.Count - 1){
                         GAMESTATE = false;
-                        //SceneManager.LoadScene(Actu)
+                        Debug.Log(questionNumberIndex + ", " + questions.Count);
+                        Debug.Log(GAMESTATE);
+                        SceneManager.LoadScene(0);
                         enableOrDisableButtons(false);
                         GetComponent<AudioSource>().Stop();
                     }
-                    else
+                    else{
                         displayQuestionAtIndex(++questionNumberIndex);
+                    }
+                        
                     globalClickedIndex = -1;
                     for(int j=0;j<4;j++){
                          mcqButtons[j].GetComponent<Image>().sprite = buttonColors[0];
