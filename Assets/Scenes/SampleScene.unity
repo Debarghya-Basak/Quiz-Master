@@ -500,7 +500,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -553,11 +553,18 @@ MonoBehaviour:
   questions:
   - {fileID: 11400000, guid: ba58173926a9fdd458f39709894ae0d6, type: 2}
   - {fileID: 11400000, guid: 5606a3c4de6c79644b418595ac6d62ea, type: 2}
+  defaultQuestionTimer: 5
+  defaultAnswerTimer: 2
   sounds:
   - {fileID: 8300000, guid: 1b5c5cf9fd336dc41a18896a3ea76255, type: 3}
   - {fileID: 8300000, guid: 1c42548edf76b7f49aee73263db54ff3, type: 3}
   - {fileID: 8300000, guid: fb243a43b3a29504583f058ce51b19b0, type: 3}
   - {fileID: 8300000, guid: 31afc4193788e80459c08c26812e5bb7, type: 3}
+  buttonColors:
+  - {fileID: 21300000, guid: 2de6d94224156314bb34a5436ca7661f, type: 3}
+  - {fileID: 21300000, guid: 78f848c4e5299984ea1420bdd1d30a54, type: 3}
+  - {fileID: 21300000, guid: 83a3fba900afe1f48be429c94364aded, type: 3}
+  - {fileID: 21300000, guid: 1568792f94acb3540837ce8f61f128cc, type: 3}
 --- !u!82 &303328077
 AudioSource:
   m_ObjectHideFlags: 0
@@ -579,7 +586,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 161.01746
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1113,7 +1120,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19664216, y: 0.10479041}
   m_AnchorMax: {x: 0.7967248, y: 0.600881}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -0.00012207, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1185141355
