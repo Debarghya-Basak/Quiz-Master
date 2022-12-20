@@ -12,10 +12,7 @@ public class QuizHandler : MonoBehaviour
 
     [Header("ENTER QUESTION OBJECTS HERE : ")] 
     [SerializeField] List<QuestionMaker> questions = new List<QuestionMaker>();
-
-    [Header("DO NOT TOUCH THESE : ")]
     [SerializeField] GameObject questionField;
-    [SerializeField] GameObject timerAnimation;
     [SerializeField] GameObject[] mcqButtons = new GameObject[4];
  
     TextMeshProUGUI questionText;
@@ -23,8 +20,8 @@ public class QuizHandler : MonoBehaviour
 
     bool answerClicked = false;
 
-    float defaultQuestionTimer = 20f;
-    float defaultAnswerTimer = 2f;
+    [SerializeField] float defaultQuestionTimer = 5f;
+    [SerializeField] float defaultAnswerTimer = 2f;
     float showQuestionTimer;
     float showAnswerTimer; 
     bool questionState = true;
@@ -34,10 +31,10 @@ public class QuizHandler : MonoBehaviour
     [SerializeField] AudioClip[] sounds = new AudioClip[4];
 
     [SerializeField] Sprite[] buttonColors = new Sprite[4];
-    
+    [SerializeField] GameObject timerAnimation;
     Image timerImageFillAmount;
 
-    private void Start()
+    void Start()
     {
         //Initialize timer
         showQuestionTimer = defaultQuestionTimer;
@@ -50,9 +47,22 @@ public class QuizHandler : MonoBehaviour
        
     }
 
-    private void Update()
+    void Update()
     {
         timer();
+    }
+
+    private void displayQuestionAtIndex(int index){
+        Debug.Log("Index : " + index);
+
+        questionText = questionField.GetComponent<TextMeshProUGUI>();
+        questionText.text = questions[index].getQuestion();
+
+        for(int i=0;i<4;i++){
+            mcqText[i] = mcqButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            mcqText[i].text = questions[index].getMCQAtIndex(i);
+        }
+
     }
 
     private void timer(){
@@ -127,24 +137,7 @@ public class QuizHandler : MonoBehaviour
         }
     }
 
-    public void onSkip(){
-        showQuestionTimer = 0;
-    }
-
-    public void displayQuestionAtIndex(int index){
-        Debug.Log("Index : " + index);
-
-        questionText = questionField.GetComponent<TextMeshProUGUI>();
-        questionText.text = questions[index].getQuestion();
-
-        for(int i=0;i<4;i++){
-            mcqText[i] = mcqButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            mcqText[i].text = questions[index].getMCQAtIndex(i);
-        }
-
-    }
-
-    private void markAnswerGivenByUser(int index){
+    public void markAnswerGivenByUser(int index){
 
         Debug.Log(index + " button is clicked.");
         globalClickedIndex = index;
@@ -155,7 +148,7 @@ public class QuizHandler : MonoBehaviour
 
     }
 
-    private void enableOrDisableButtons(bool buttonState){
+    public void enableOrDisableButtons(bool buttonState){
         if(buttonState){
             for(int i=0;i<4;i++){
                 mcqButtons[i].GetComponent<Button>().interactable = true;
@@ -169,5 +162,4 @@ public class QuizHandler : MonoBehaviour
         
         
     }
-
 }
